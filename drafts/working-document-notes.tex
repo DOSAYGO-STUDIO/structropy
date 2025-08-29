@@ -1,0 +1,188 @@
+\documentclass[11pt]{article}
+
+% Basic packages
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{hyperref}
+\usepackage{booktabs}
+\usepackage{geometry}
+\geometry{margin=1in}
+
+% Title info
+\title{Towards a Metric of Organization:\\
+Exploratory Notes and Draft Framework}
+\author{[You, me, collaborators]}
+\date{August 2025}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+Entropy is well formalized as a measure of uncertainty, but it does not capture
+structure or organization. In these exploratory notes we sketch a complementary
+metric---the Organization Index---that quantifies the efficiency of retrieval in
+structured systems. We propose several candidate formulations, examine toy
+examples, and study robustness under perturbations. The goal is to provide a
+jumping-off point for a future theory of organization, parallel to information
+theory.
+\end{abstract}
+
+\section{Motivation}
+Entropy (Shannon entropy, or in physics, Boltzmann entropy) measures
+unpredictability in a distribution. However, entropy is not synonymous with
+structure: high entropy often corresponds to random noise, which is largely
+useless without an external decoder. Human systems (data, libraries, puzzles,
+computation) are valued for their organization: the speed and reliability with
+which one can find what is needed.
+
+\emph{Goal:} develop a complementary metric to entropy that quantifies
+organization, defined operationally as the efficiency of retrieval.
+
+\section{Conceptual Framework}
+\begin{itemize}
+  \item \textbf{Entropy:} Uncertainty or randomness in a source.
+  \item \textbf{Organization (proposed):} Efficiency of retrieval.
+\end{itemize}
+
+\noindent
+Key principle:
+\[
+\text{Organization} \;\equiv\; \frac{\text{Baseline cost}}{\mathbb{E}[T]}
+\]
+where $\mathbb{E}[T]$ is the expected number of steps to locate an element.
+
+\section{Candidate Metrics}
+\subsection{Organization Index vs. Sorted Baseline}
+\[
+\mathrm{OI}_{\log} = \frac{\log_2 n}{\mathbb{E}[T]}
+\]
+Here $n$ is the number of items. A perfectly sorted structure (binary search)
+yields $\mathrm{OI}_{\log} \approx 1$. A linear scan yields
+$\mathrm{OI}_{\log} \ll 1$. Hashing or indexing can yield $\mathrm{OI}_{\log} >
+1$. Optionally, one may cap at 1.
+
+\subsection{Entropy-Aware Organization}
+\[
+\mathrm{OI}_H = \frac{H(P)}{\mathbb{E}[T]}
+\]
+where $H(P)$ is Shannon entropy of the query distribution. Optimal search trees
+achieve $\mathbb{E}[T] \approx H(P)+O(1)$. Thus $\mathrm{OI}_H \approx 1$ for
+comparison-optimal organization, and $\mathrm{OI}_H > 1$ for auxiliary data
+structures (e.g.\ hashing).
+
+\subsection{Step-Discounted Organization (IR-inspired)}
+Borrowing from information retrieval metrics such as NDCG:
+\[
+\mathrm{OI}_{\text{SDG}} = \mathbb{E}\!\left[\frac{1}{\log_2(1+T)}\right],
+\]
+which lies in $(0,1]$ and captures the diminishing returns of additional steps.
+
+\section{Toy Examples}
+\subsection{Uniform queries, 52-card deck}
+\begin{center}
+\begin{tabular}{lccc}
+\toprule
+Scenario & $\mathbb{E}[T]$ & $\mathrm{OI}_{\log}$ & $\mathrm{OI}_{\text{SDG}}$ \\
+\midrule
+Unsorted pile   & $\sim26.5$ & 0.215 & 0.209 \\
+Sorted (binary) & $\sim5.7$  & 1.000 & 0.364 \\
+Hashed index    & $\sim1.2$  & 4.750 & 0.879 \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\subsection{Skewed query distribution}
+Suppose 50\% of queries target a single card. Then
+$H(P)\approx 3.84$ bits and an optimal search tree achieves
+$\mathbb{E}[T]\approx 3.84$, giving $\mathrm{OI}_H\approx 1$.
+
+\section{Differential Organization}
+\subsection{Misfiled Item}
+If one item is placed in the wrong bucket of size $s$,
+\[
+\Delta \mathbb{E}[T] \;\approx\; \frac{1+\log_2(s+1)}{n}.
+\]
+Corresponding change in OI:
+\[
+\Delta \mathrm{OI} \;\approx\;
+-\frac{\log_2 n}{(\log_2 n)^2}\cdot \frac{1+\log_2(s+1)}{n}.
+\]
+
+Example: 52-card deck sorted by suits. Perfect OI = 1. With one misfile,
+$\mathrm{OI} \approx 0.984$. Smaller buckets are more robust.
+
+\subsection{Reshaping Buckets}
+Moving one item from bucket $a$ to $b$:
+\[
+\Delta \mathbb{E}[T] \;\approx\; \frac{1}{n\ln 2}
+\left(\frac{1}{n_b} - \frac{1}{n_a}\right).
+\]
+Organization is maximized when buckets are balanced.
+
+\subsection{Within-Bucket Disorder}
+Binary search breaks under a single inversion; robust policies (guards +
+fallback) reduce this to a misfile penalty.
+
+\section{Properties of the Organization Index}
+\paragraph{Not a metric.}
+In the strict mathematical sense, $\mathrm{OI}$ is not a distance function and
+does not obey the triangle inequality. It is better understood as an \emph{index}
+(like entropy or the Gini coefficient). A derived dissimilarity
+$|\mathrm{OI}(A)-\mathrm{OI}(B)|$ is symmetric but does not inherit metric
+properties.
+
+\paragraph{Monotonicity.}
+$\mathrm{OI}$ is monotone in $\tfrac{1}{\mathbb{E}[T]}$. Fewer expected steps
+always increases organization.
+
+\paragraph{Scale dependence.}
+Because the baseline grows as $\log n$, larger systems exhibit higher possible
+organization scores. This matches intuition: a well-organized library is
+``more organized'' than a well-organized deck of cards. Scale matters.
+
+\paragraph{Boundedness.}
+\begin{itemize}
+  \item In comparison-only models, $\mathrm{OI}\leq 1$ (with small slack).
+  \item With auxiliary data structures (hashing, indexing), $\mathrm{OI}$ can
+  grow as $\Theta(\log n)$. Thus organization can scale unbounded with system
+  size.
+\end{itemize}
+
+\paragraph{Differential sensitivity.}
+Small perturbations (misfiles, bucket shifts) change $\mathrm{OI}$ smoothly,
+with $\Delta \mathrm{OI}=O(1/n)$. Finer partitions are more robust to errors.
+
+\section{Connections to Literature}
+\begin{itemize}
+  \item \textbf{Optimal search trees:} average cost bounded by entropy $H(P)$.
+  \item \textbf{Huffman coding analogy:} minimizing expected code length mirrors
+  minimizing expected search depth.
+  \item \textbf{IR metrics:} NDCG and MRR parallel the step-discounting idea.
+  \item \textbf{Complexity theory:} effective complexity, logical depth,
+  statistical complexity. Our approach is operational and measurable.
+\end{itemize}
+
+\section{Open Questions and Future Work}
+\begin{itemize}
+  \item Normalization choice: bounded vs unbounded scores.
+  \item Distributional sensitivity: handling skewed or unknown query
+  distributions.
+  \item Dynamic systems: including maintenance and update costs.
+  \item Multi-level organization: hierarchies, caches, indexes.
+  \item Biological analogy: SNP-like mutations as perturbations to structure.
+  \item Applications: IR benchmarks, database indexing, cognitive models,
+  evolutionary biology.
+\end{itemize}
+
+\section{Conclusion}
+Entropy quantifies randomness; organization quantifies efficiency of access.
+Our candidate definitions ($\mathrm{OI}_{\log}$, $\mathrm{OI}_H$,
+$\mathrm{OI}_{\text{SDG}}$) provide complementary measures. Differential studies
+reveal robustness properties, and scaling analysis separates comparison-based
+organization from ``super-organized'' structures. This framework can grow into a
+general \emph{theory of organization} parallel to information theory.
+
+\bibliographystyle{plain}
+% \bibliography{organization} % (future references)
+
+\end{document}
+
