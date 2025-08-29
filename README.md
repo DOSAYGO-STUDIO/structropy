@@ -148,7 +148,7 @@ A single inversion breaks binary search; robust fallback reduces this to a misfi
 ## 9. Conclusion
 
 Entropy quantifies randomness; **organization quantifies efficiency of access**.  
-Our metrics ($\mathrm{OI}_{\log}$, $\mathrm{OI}_H$, $\mathrm{OI}_{\text{SDG}}$)  
+Our metrics $\mathrm{OI}\_{\log}$, $\mathrm{OI}\_H$, $\mathrm{OI}\_{\text{SDG}}$ 
 provide complementary perspectives. Differential analysis shows robustness under  
 noise, and scaling separates comparison-only from “super-organized” structures.  
 
