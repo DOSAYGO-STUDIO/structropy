@@ -1,6 +1,6 @@
 # Draft Research Notes: Towards a Metric of Organization
 
-**Author(s):** [You, me, collaborators]  
+**Author(s):** [Cris, ChatGPT, collaborators]  
 **Date:** Aug 2025  
 **Status:** Exploratory notes, draft structure  
 
