@@ -47,7 +47,7 @@ $$
 ### 3.2 Entropy-Aware Organization
 
 $$
-\mathrm{OI}_H = \frac{H(P)}{\mathbb{E}[T]}
+\mathrm{OI}\_H = \frac{H(P)}{\mathbb{E}[T]}
 $$
 
 - $H(P)$ = Shannon entropy of query distribution.  
@@ -59,7 +59,7 @@ $$
 Borrowing from NDCG/MRR:  
 
 $$
-\mathrm{OI}_{\text{SDG}} = \mathbb{E}\!\left[\frac{1}{\log_2(1+T)}\right]
+\mathrm{OI}\_{\text{SDG}} = \mathbb{E}\!\left[\frac{1}{\log_2(1+T)}\right]
 $$
 
 - Always in (0,1].  
@@ -78,7 +78,7 @@ Let $\mathbb{E}[T]_{\mathrm{rand}}$ = expected steps in a fully unorganized syst
 Normalized form:
 
 $$
-\mathrm{OI}^{\mathrm{norm}}_{\log} =
+\mathrm{OI}^{\mathrm{norm}}\_{\log} =
 \frac{\tfrac{\log_2 n}{\mathbb{E}[T]} - \tfrac{\log_2 n}{\mathbb{E}[T]_{\mathrm{rand}}}}
 {1 - \tfrac{\log_2 n}{\mathbb{E}[T]_{\mathrm{rand}}}}
 $$
@@ -86,7 +86,7 @@ $$
 Entropy-aware version:
 
 $$
-\mathrm{OI}^{\mathrm{norm}}_H =
+\mathrm{OI}^{\mathrm{norm}}\_H =
 \frac{\tfrac{H(P)}{\mathbb{E}[T]} - \tfrac{H(P)}{\mathbb{E}[T]_{\mathrm{rand}}}}
 {1 - \tfrac{H(P)}{\mathbb{E}[T]_{\mathrm{rand}}}}
 $$
