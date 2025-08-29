@@ -76,6 +76,31 @@ Borrowing from information retrieval metrics such as NDCG:
 \]
 which lies in $(0,1]$ and captures the diminishing returns of additional steps.
 
+\subsection{Normalization of the Organization Index}
+In many contexts it is desirable to bound the index to the unit interval $[0,1]$.
+We define the normalized Organization Index so that:
+\begin{itemize}
+  \item Perfect disorder (linear scan, no exploitable structure) $\;\to\; 0$.
+  \item Optimal comparison-based organization (binary search or entropy bound) $\;\to\; 1$.
+\end{itemize}
+
+Let $\mathbb{E}[T]_{\mathrm{rand}}$ denote the expected search cost under a
+completely unorganized system (e.g.\ $(n+1)/2$ for linear scan under uniform
+queries). Then:
+\[
+\mathrm{OI}^{\mathrm{norm}}_{\log} \;=\;
+\frac{\tfrac{\log_2 n}{\mathbb{E}[T]} - \tfrac{\log_2 n}{\mathbb{E}[T]_{\mathrm{rand}}}}
+{1 - \tfrac{\log_2 n}{\mathbb{E}[T]_{\mathrm{rand}}}}.
+\]
+
+Similarly, in the entropy-aware setting:
+\[
+\mathrm{OI}^{\mathrm{norm}}_H \;=\;
+\frac{\tfrac{H(P)}{\mathbb{E}[T]} - \tfrac{H(P)}{\mathbb{E}[T]_{\mathrm{rand}}}}
+{1 - \tfrac{H(P)}{\mathbb{E}[T]_{\mathrm{rand}}}}.
+\]
+
+
 \section{Toy Examples}
 \subsection{Uniform queries, 52-card deck}
 \begin{center}
