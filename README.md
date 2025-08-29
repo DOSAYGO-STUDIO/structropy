@@ -36,7 +36,7 @@ where $\mathbb{E}[T]$ = expected search steps.
 ### 3.1 Organization Index vs. Sorted Baseline
 
 $$
-\mathrm{OI}_{\log} = \frac{\log_2 n}{\mathbb{E}[T]}
+\mathrm{OI}\_{\log} = \frac{\log_2 n}{\mathbb{E}[T]}
 $$
 
 - $n$ = number of items.  
@@ -51,8 +51,8 @@ $$
 $$
 
 - $H(P)$ = Shannon entropy of query distribution.  
-- If $\mathrm{OI}_H \approx 1$, system is near theoretical optimum.  
-- If $\mathrm{OI}_H > 1$, non-comparison structures are in play.  
+- If $\mathrm{OI}\_H \approx 1$, system is near theoretical optimum.  
+- If $\mathrm{OI}\_H > 1$, non-comparison structures are in play.  
 
 ### 3.3 Step-Discounted Organization
 
@@ -101,15 +101,19 @@ $$
 
 **52-card deck (uniform queries):**
 
-| Scenario        | $\mathbb{E}[T]$ | $\mathrm{OI}_{\log}$ | $\mathrm{OI}_{\text{SDG}}$ |
-|-----------------|-----------------|----------------------|----------------------------|
-| Unsorted pile   | ~26.5           | 0.215                | 0.209                      |
-| Sorted (binary) | ~5.7            | 1.0                  | 0.364                      |
-| Hashed index    | ~1.2            | 4.75                 | 0.879                      |
+| Scenario        | $\mathbb{E}[T]$ | $\mathrm{OI}\_{\log}$ | $\mathrm{OI}^{\text{norm}}\_{\log}$ | $\mathrm{OI}\_{\text{SDG}}$ |
+|-----------------|-----------------|----------------------|-------------------------------------|----------------------------|
+| Unsorted pile   | ~26.5           | 0.215                | 0.000                               | 0.209                      |
+| Sorted (binary) | ~5.7            | 1.000                | 1.000                               | 0.364                      |
+| Hashed index    | ~1.2            | 4.750                | 5.778                               | 0.879                      |
+
+*If you want a bounded score, use the capped normalization
+$\mathrm{OI}^{\text{norm,capped}}\_{\log}=\min(1,\mathrm{OI}^{\text{norm}}\_{\log})$,
+which maps the hashed row to 1.000.*
 
 **Skewed distribution:**  
 If 50% of queries target one item, $H(P)\approx 3.84$ bits and  
-$\mathbb{E}[T]\approx 3.84 \Rightarrow \mathrm{OI}_H \approx 1$.  
+$\mathbb{E}[T]\approx 3.84 \Rightarrow \mathrm{OI}\_H \approx 1$.  
 
 ---
 

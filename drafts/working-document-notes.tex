@@ -104,16 +104,19 @@ Similarly, in the entropy-aware setting:
 \section{Toy Examples}
 \subsection{Uniform queries, 52-card deck}
 \begin{center}
-\begin{tabular}{lccc}
+\begin{tabular}{lcccc}
 \toprule
-Scenario & $\mathbb{E}[T]$ & $\mathrm{OI}_{\log}$ & $\mathrm{OI}_{\text{SDG}}$ \\
+Scenario & $\mathbb{E}[T]$ & $\mathrm{OI}_{\log}$ & $\mathrm{OI}^{\text{norm}}_{\log}$ & $\mathrm{OI}_{\text{SDG}}$ \\
 \midrule
-Unsorted pile   & $\sim26.5$ & 0.215 & 0.209 \\
-Sorted (binary) & $\sim5.7$  & 1.000 & 0.364 \\
-Hashed index    & $\sim1.2$  & 4.750 & 0.879 \\
+Unsorted pile   & $\sim26.5$ & 0.215 & 0.000 & 0.209 \\
+Sorted (binary) & $\sim5.7$  & 1.000 & 1.000 & 0.364 \\
+Hashed index    & $\sim1.2$  & 4.750 & 5.778 & 0.879 \\
 \bottomrule
 \end{tabular}
 \end{center}
+
+% Note: If you prefer a bounded score, use capped normalization
+% OI^{norm,capped}_log = min(1, OI^{norm}_log), which maps the hashed row to 1.000.
 
 \subsection{Skewed query distribution}
 Suppose 50\% of queries target a single card. Then
