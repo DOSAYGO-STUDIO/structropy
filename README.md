@@ -72,23 +72,23 @@ Often we want to normalize to the unit interval [0,1] so that:
 - Perfect disorder (linear scan, no structure) → 0
 - Optimal comparison-based organization (binary search or entropy bound) → 1
 
-Let $\mathbb{E}[T]_{\mathrm{rand}}$ = expected steps in a fully unorganized system
+Let $\mathbb{E}[T]\_{\mathrm{rand}}$ = expected steps in a fully unorganized system
 (e.g. $(n+1)/2$ for linear scan under uniform queries).
 
 Normalized form:
 
 $$
 \mathrm{OI}^{\mathrm{norm}}\_{\log} =
-\frac{\tfrac{\log_2 n}{\mathbb{E}[T]} - \tfrac{\log_2 n}{\mathbb{E}[T]_{\mathrm{rand}}}}
-{1 - \tfrac{\log_2 n}{\mathbb{E}[T]_{\mathrm{rand}}}}
+\frac{\tfrac{\log_2 n}{\mathbb{E}[T]} - \tfrac{\log_2 n}{\mathbb{E}[T]\_{\mathrm{rand}}}}
+{1 - \tfrac{\log_2 n}{\mathbb{E}[T]\_{\mathrm{rand}}}}
 $$
 
 Entropy-aware version:
 
 $$
 \mathrm{OI}^{\mathrm{norm}}\_H =
-\frac{\tfrac{H(P)}{\mathbb{E}[T]} - \tfrac{H(P)}{\mathbb{E}[T]_{\mathrm{rand}}}}
-{1 - \tfrac{H(P)}{\mathbb{E}[T]_{\mathrm{rand}}}}
+\frac{\tfrac{H(P)}{\mathbb{E}[T]} - \tfrac{H(P)}{\mathbb{E}[T]\_{\mathrm{rand}}}}
+{1 - \tfrac{H(P)}{\mathbb{E}[T]\_{\mathrm{rand}}}}
 $$
 
 - Perfect disorder → score 0
