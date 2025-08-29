@@ -107,9 +107,9 @@ $$
 | Sorted (binary) | ~5.7            | 1.000                | 1.000                               | 0.364                      |
 | Hashed index    | ~1.2            | 4.750                | 5.778                               | 0.879                      |
 
-*If you want a bounded score, use the capped normalization
+*If you want a bounded score, use the capped normalization*
 $\mathrm{OI}^{\text{norm,capped}}\_{\log}=\min(1,\mathrm{OI}^{\text{norm}}\_{\log})$,
-which maps the hashed row to 1.000.*
+*which maps the hashed row to 1.000.*
 
 **Skewed distribution:**  
 If 50% of queries target one item, $H(P)\approx 3.84$ bits and  
