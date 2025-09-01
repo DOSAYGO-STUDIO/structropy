@@ -1,4 +1,6 @@
-# Draft Research Notes: Towards a Metric of Organization
+# Structropy - Towards a Metric of Organization
+
+## *Draft Research Notes*
 
 **Author(s):** [Cris, ChatGPT, collaborators]  
 **Date:** Aug 2025  
